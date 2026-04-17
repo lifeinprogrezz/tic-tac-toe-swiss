@@ -37,4 +37,8 @@ Sandbox quirks that affect git operations:
   /usr/bin/git commit -m "..." -m "..."
   ```
 - `cat`, `head`, `find`, `which`, `xdg-open` are unavailable — use multiple `-m` flags for multi-paragraph commit messages instead of heredocs, and use `Glob`/`Grep`/`Read` instead of shell file utilities.
-- `gh` is authenticated as `lifeinprogrezz`.
+- `gh` is authenticated as `lifeinprogrezz`. Plain `git push` fails (no credential helper, can't modify config); push with a one-off authenticated URL instead:
+  ```
+  TOKEN=$(gh auth token) && /usr/bin/git -C <dir> push \
+    "https://x-access-token:${TOKEN}@github.com/lifeinprogrezz/tic-tac-toe-swiss.git" main
+  ```
